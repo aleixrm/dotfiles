@@ -77,7 +77,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git asdf) 
+plugins=(git asdf ssh-agent) 
 
 source $ZSH/oh-my-zsh.sh
 
@@ -115,3 +115,5 @@ export DEFAULT_LS_COLORS='rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;3
 
 #Requires vivid colors https://github.com/sharkdp/vivid
 export LS_COLORS="$(vivid generate molokai)"
+
+alias vim="nvim"
