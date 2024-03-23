@@ -927,9 +927,3 @@ hide_when_typing = false
 # SEE ALSO
 # alacritty(1), alacritty-msg(1), alacritty-bindings(5)
 
-# BUGS
-# Found a bug? Please report it at https://github.com/alacritty/alacritty/issues.
-
-# MAINTAINERS
-# · Christian Duerr <contact@christianduerr.com>
-# · Kirill Chibisov <contact@kchibisov.com>
