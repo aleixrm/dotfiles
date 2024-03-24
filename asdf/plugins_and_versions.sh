@@ -4,7 +4,6 @@ NEOVIM_VER=0.9.5
 PYTHON_VER=3.12.2
 
 # Plugins -> asdf plugin add <plugin>
-
 asdf plugin add neovim
 asdf plugin add python
 
