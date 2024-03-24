@@ -4,6 +4,10 @@ local opts = {
     silent = true,    -- do not show message
 }
 
+-- map leader key
+vim.g.maplocalleader = ','
+vim.g.mapleader = ','
+
 -----------------
 -- Normal mode --
 -----------------

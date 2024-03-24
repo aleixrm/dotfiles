@@ -24,10 +24,7 @@ vim.opt.hlsearch = false            -- do not highlight matches
 vim.opt.ignorecase = true           -- ignore case in searches by default
 vim.opt.smartcase = true            -- but make it case sensitive if an uppercase is entered
 
--- Format options
-vim.opt_local.formatoptions:remove({'r', 'c', 'o'}) -- Disables autocomment
-
-
+-- Disable automatically add comments on newline in a comment block
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "*",
     callback = function()
