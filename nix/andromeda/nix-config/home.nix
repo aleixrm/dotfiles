@@ -91,40 +91,84 @@
 
   programs.tmux = {
     enable = true;
+
+    # Change prefix to Ctrl+a and unbind C-b
+    prefix = "C-a";
+    escapeTime = 200;
+    baseIndex = 1;
+    mouse = true;
+    terminal = "tmux-256color";
+    keyMode = "vi";
+
+    # Plugins
+    plugins = with pkgs.tmuxPlugins; [
+      sensible
+      resurrect
+    ];
+
+    extraConfig = ''
+      # Send Ctrl+a to applications inside tmux pressing it twice
+      bind C-a send-prefix
+
+      # Force reload of config file
+      unbind r
+      bind r source-file ~/.config/tmux/tmux.conf \; display-message "~/.config/tmux/tmux.conf reloaded."
+
+      # hjkl pane traversal
+      bind h select-pane -L
+      bind j select-pane -D
+      bind k select-pane -U
+      bind l select-pane -R
+
+      # Enables focus-events
+      set-option -g focus-events on
+
+      # Enable true colors
+      set-option -ag terminal-overrides ',xterm-256color:RGB'
+
+      # copy to clipboard
+      set-option -s set-clipboard off
+      bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "xclip -selection clipboard -i"
+    '';
   };
 
   programs.vscode = {
     enable = true;
-    profiles.default.extensions = with pkgs.vscode-extensions; [
-	dracula-theme.theme-dracula
-	vscodevim.vim
-	yzhang.markdown-all-in-one
-    ];
-  };
-
-  programs.starship = {
-    enable = true;
-    enableZshIntegration = true; # Or enableBashIntegration, enableFishIntegration, etc.
-    settings = {
-      add_newline = false;
-      format = "$shlvl$shell$username$hostname$nix_shell$git_branch$git_commit$git_state$git_status$directory$jobs$cmd_duration$character";
-      shlvl = {
-        disabled = false;
-        symbol = "ﰬ";
-        style = "bright-red bold";
-      };
-      shell = {
-        disabled = false;
-        format = "$indicator";
-        fish_indicator = "";
-        bash_indicator = "[BASH](bright-white) ";
-        zsh_indicator = "[ZSH](bright-white) ";
-      };
-      username = {
-        style_user = "bright-white bold";
-        style_root = "bright-red bold";
+    profiles.default = {
+      extensions = with pkgs.vscode-extensions; [
+	      dracula-theme.theme-dracula
+	      vscodevim.vim
+	      yzhang.markdown-all-in-one
+        bbenoist.nix
+      ];
+      userSettings = {
+        "editor.fontFamily" = "MesloLGS Nerd Font Mono";
+        # Optional: adjust size or ligatures as you wish
+        "editor.fontSize" = 14;
+        "editor.fontLigatures" = true;
       };
     };
   };
 
+  programs.kitty = {
+    enable = true;
+
+    font = {
+      name = "MesloLGS Nerd Font Mono";
+      # The following are kitty defaults and can be omitted,
+      # but shown here for clarity if you want to be explicit:
+      # bold = "auto";
+      # italic = "auto";
+      # boldItalic = "auto";
+    };
+    extraConfig = ''
+      symbol_map U+e000-U+e00a,U+ea60-U+ebeb,U+e0a0-U+e0c8,U+e0ca,U+e0cc-U+e0d7,U+e200-U+e2a9,U+e300-U+e3e3,U+e5fa-U+e6b7,U+e700-U+e8ef,U+ed00-U+efc1,U+f000-U+f2ff,U+f000-U+f2e0,U+f300-U+f381,U+f400-U+f533,U+f0001-U+f1af0 Symbols Nerd Font Mono
+    '';
+  };
+
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
+    settings = builtins.fromTOML (builtins.readFile ./gruvbox-rainbow.toml);
+  };
 }
