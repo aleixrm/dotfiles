@@ -40,6 +40,7 @@
     pkgs.htop
     pkgs.spotify
     pkgs.nerd-fonts.meslo-lg
+    pkgs.mesa
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
