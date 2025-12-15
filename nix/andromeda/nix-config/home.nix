@@ -40,7 +40,8 @@
     pkgs.htop
     pkgs.spotify
     pkgs.nerd-fonts.meslo-lg
-    pkgs.mesa
+    pkgs.podman # requires install system-wide "uidmap" package
+    pkgs.podman-tui
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -130,6 +131,15 @@
       # copy to clipboard
       set-option -s set-clipboard off
       bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "xclip -selection clipboard -i"
+
+      # List of plugins
+      set -g @plugin 'tmux-plugins/tpm'
+      set -g @plugin 'tmux-plugins/tmux-sensible'
+      # tmux-resurrect plugin
+      set -g @plugin 'tmux-plugins/tmux-resurrect'
+
+      # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+      run '~/.tmux/plugins/tpm/tpm'
     '';
   };
 
@@ -140,13 +150,17 @@
 	      dracula-theme.theme-dracula
 	      vscodevim.vim
 	      yzhang.markdown-all-in-one
-        bbenoist.nix
+              bbenoist.nix
+              ms-vscode-remote.remote-containers
       ];
       userSettings = {
         "editor.fontFamily" = "MesloLGS Nerd Font Mono";
         # Optional: adjust size or ligatures as you wish
         "editor.fontSize" = 14;
         "editor.fontLigatures" = true;
+        "terminal.integrated.customGlyphs" = false;
+        "dev.containers.dockerPath" = "podman";
+        "terminal.integrated.profiles.linux.bash.path" = "/usr/bin/bash";
       };
     };
   };
@@ -161,6 +175,10 @@
       # bold = "auto";
       # italic = "auto";
       # boldItalic = "auto";
+    };
+    settings = {
+      enable_audio_bell = "no";
+      copy_on_select = "yes";
     };
     extraConfig = ''
       symbol_map U+e000-U+e00a,U+ea60-U+ebeb,U+e0a0-U+e0c8,U+e0ca,U+e0cc-U+e0d7,U+e200-U+e2a9,U+e300-U+e3e3,U+e5fa-U+e6b7,U+e700-U+e8ef,U+ed00-U+efc1,U+f000-U+f2ff,U+f000-U+f2e0,U+f300-U+f381,U+f400-U+f533,U+f0001-U+f1af0 Symbols Nerd Font Mono
