@@ -152,15 +152,17 @@
 	      yzhang.markdown-all-in-one
               bbenoist.nix
               ms-vscode-remote.remote-containers
+              redhat.ansible
       ];
       userSettings = {
-        "editor.fontFamily" = "MesloLGS Nerd Font Mono";
+        "editor.fontFamily" = "'MesloLGS Nerd Font Mono'";
         # Optional: adjust size or ligatures as you wish
         "editor.fontSize" = 14;
         "editor.fontLigatures" = true;
         "terminal.integrated.customGlyphs" = false;
         "dev.containers.dockerPath" = "podman";
         "terminal.integrated.profiles.linux.bash.path" = "/usr/bin/bash";
+        "redhat.telemetry.enabled" = "false";
       };
     };
   };
