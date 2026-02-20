@@ -20,7 +20,7 @@
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = [
+  home.packages = with pkgs; [
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
@@ -37,11 +37,16 @@
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
-    pkgs.htop
-    pkgs.spotify
-    pkgs.nerd-fonts.meslo-lg
-    pkgs.podman # requires install system-wide "uidmap" package
-    pkgs.podman-tui
+    htop
+    btop
+    spotify
+    nerd-fonts.meslo-lg
+    podman # requires install system-wide "uidmap" package
+    podman-tui
+    passt # required for rootless podman 
+    xclip
+    nmap
+    tree
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -57,6 +62,27 @@
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
     # '';
+
+    ".config/containers/policy.json" = {
+      text = ''
+        {
+          "default": [
+            {
+              "type": "insecureAcceptAnything"
+            }
+          ],
+          "transports": {
+            "docker": {
+              "": [
+                {
+                  "type": "insecureAcceptAnything"
+                }
+              ]
+            }
+          }
+        }
+      '';
+    };
   };
 
   # Home Manager can also manage your environment variables through
@@ -147,12 +173,16 @@
     enable = true;
     profiles.default = {
       extensions = with pkgs.vscode-extensions; [
-	      dracula-theme.theme-dracula
-	      vscodevim.vim
-	      yzhang.markdown-all-in-one
-              bbenoist.nix
-              ms-vscode-remote.remote-containers
-              redhat.ansible
+        github.copilot-chat
+	dracula-theme.theme-dracula
+        shardulm94.trailing-spaces
+	vscodevim.vim
+	yzhang.markdown-all-in-one
+        bbenoist.nix
+        ms-vscode-remote.remote-containers
+        redhat.ansible
+        ms-vscode.makefile-tools
+        bbenoist.nix
       ];
       userSettings = {
         "editor.fontFamily" = "'MesloLGS Nerd Font Mono'";
@@ -160,7 +190,7 @@
         "editor.fontSize" = 14;
         "editor.fontLigatures" = true;
         "terminal.integrated.customGlyphs" = false;
-        "dev.containers.dockerPath" = "podman";
+        "dev.containers.dockerPath" = "/home/zahori/.nix-profile/bin/podman";
         "terminal.integrated.profiles.linux.bash.path" = "/usr/bin/bash";
         "redhat.telemetry.enabled" = "false";
       };
