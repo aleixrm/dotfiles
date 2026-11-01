@@ -42,12 +42,19 @@
     spotify
     nerd-fonts.meslo-lg
     podman # requires install system-wide "uidmap" package
+    podman-compose
     podman-tui
     passt # required for rootless podman 
     xclip
     nmap
     tree
     direnv
+    obsidian
+    unixtools.fdisk
+    qbittorrent
+    dbeaver-bin
+    kubernetes-helm
+    keychain
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -105,7 +112,7 @@
   home.sessionVariables = {
     # EDITOR = "emacs";
     EDITOR = "vim";
-    PATH = "$PATH:$HOME/.local/kitty.app/bin/";
+    PATH = "$PATH:$HOME/bin";
 
   };
 
@@ -184,16 +191,20 @@
         redhat.ansible
         ms-vscode.makefile-tools
         bbenoist.nix
+        golang.go
+        rust-lang.rust-analyzer
       ];
       userSettings = {
         "editor.fontFamily" = "'MesloLGS Nerd Font Mono'";
         # Optional: adjust size or ligatures as you wish
         "editor.fontSize" = 14;
         "editor.fontLigatures" = true;
-        "terminal.integrated.customGlyphs" = false;
+        #"terminal.integrated.customGlyphs" = false;
         "dev.containers.dockerPath" = "/home/zahori/.nix-profile/bin/podman";
         "terminal.integrated.profiles.linux.bash.path" = "/usr/bin/bash";
         "redhat.telemetry.enabled" = "false";
+        "terminal.integrated.fontFamily" = "'MesloLGS Nerd Font Mono'";
+        "dev.containers.dockerComposePath" = "/home/zahori/.nix-profile/bin/podman-compose";
       };
     };
   };
